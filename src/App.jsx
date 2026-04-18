@@ -9,7 +9,6 @@ import GIC from './sections/GIC.jsx'
 import TrustZone from './sections/TrustZone.jsx'
 import Cores from './sections/Cores.jsx'
 import Microarchitecture from './sections/Microarchitecture.jsx'
-import AMBA from './sections/AMBA.jsx'
 import './App.css'
 
 const SECTIONS = [
@@ -23,7 +22,6 @@ const SECTIONS = [
   { id: 'tz',        ko: 'TrustZone',        en: 'Secure World',        C: TrustZone,         tag: 'Security',    tagline: 'NS bit 전파, Secure EL3 Monitor, TEE, SMC, PSCI.' },
   { id: 'cores',     ko: '코어 제품군',       en: 'Core Lineup',         C: Cores,             tag: 'Reference',   tagline: 'Cortex-A / R / M, Neoverse, big.LITTLE / DynamIQ.' },
   { id: 'uarch',     ko: '마이크로아키텍처',    en: 'Microarchitecture',   C: Microarchitecture, tag: 'Deep Dive',   tagline: '파이프라인, 분기예측, OoO backend, LSU, 프리페처, SVE, PMU, 스펙 미티게이션.' },
-  { id: 'amba',      ko: 'AMBA / AXI',       en: 'Bus Protocols',       C: AMBA,              tag: 'SoC',         tagline: 'AXI4 5-채널, ACE snoop, CHI mesh — ARM 표준 버스 체계.' },
 ]
 
 const ThemeToggle = ({ theme, onToggle }) => (
@@ -88,7 +86,7 @@ export default function App() {
           ))}
         </div>
         <div className="sidebar-footer">
-          <span style={{ fontSize: 11, color: 'var(--text-faint)' }}>v1.3</span>
+          <span style={{ fontSize: 11, color: 'var(--text-faint)' }}>v1.4</span>
           <ThemeToggle theme={theme} onToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')} />
         </div>
       </aside>
