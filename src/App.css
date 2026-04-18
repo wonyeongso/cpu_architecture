@@ -171,7 +171,12 @@ pre {
 }
 pre code {
   background: none; padding: 0; border: none; color: var(--text);
-  font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 400;
+  font-family: "JetBrains Mono", "Menlo", "DejaVu Sans Mono", "Consolas", ui-monospace, monospace;
+  font-weight: 400;
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+  letter-spacing: 0;
+  text-rendering: geometricPrecision;
 }
 pre::-webkit-scrollbar { height: 6px; }
 pre::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
@@ -231,9 +236,15 @@ td code { font-size: 12px; }
 .diagram {
   background: var(--bg-1); border: 1px solid var(--border);
   padding: 20px 24px; border-radius: 10px; margin: 16px 0;
-  font-family: "JetBrains Mono", monospace; font-size: 12px;
-  line-height: 1.6; white-space: pre; overflow-x: auto;
+  font-family: "JetBrains Mono", "Menlo", "DejaVu Sans Mono", "Consolas", ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1.5; white-space: pre; overflow-x: auto;
   color: var(--text); box-shadow: var(--shadow-sm);
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+  letter-spacing: 0;
+  text-rendering: geometricPrecision;
+  tab-size: 4;
 }
 
 .el-stack { display: flex; flex-direction: column; gap: 8px; margin: 16px 0; }

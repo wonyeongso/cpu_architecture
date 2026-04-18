@@ -44,7 +44,7 @@ export default function RiscvInterrupts() {
       <h2>PLIC 구조 <span className="en">/ Distributor + Targets</span></h2>
       <div className="diagram">{`    External devices (UART, eth, storage, ...)
               │
-              ▼
+              v
    ┌──────────────────────────────────┐
    │          PLIC                    │
    │  - Priority registers            │

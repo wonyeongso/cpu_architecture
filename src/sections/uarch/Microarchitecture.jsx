@@ -22,11 +22,11 @@ export default function Microarchitecture() {
       <h2>파이프라인 블록 <span className="en">/ Pipeline Blocks</span></h2>
       <p>Frontend는 명령을 OoO backend에 공급하고, Backend는 실제 실행·메모리·retire를 수행합니다.</p>
       <div className="diagram">{`// Frontend (in-order fetch & decode)
-[BPU + BTB/RAS] ─► [IFU / I-cache] ─► [Decode + μop crack] ─► [Rename / Dispatch]
-       ▲  decoupled                                          │
-       │                                                      ▼
+[BPU + BTB/RAS] ─> [IFU / I-cache] ─> [Decode + μop crack] ─> [Rename / Dispatch]
+       ^  decoupled                                          │
+       │                                                      v
 // Backend (Out-of-Order execution & in-order retire)
-[Issue Queues] ─► [Execute Ports] ─► [Writeback] ─► [ROB Retire]
+[Issue Queues] ─> [Execute Ports] ─> [Writeback] ─> [ROB Retire]
                     │
                     ├─ ALU × N            (single-cycle int)
                     ├─ Branch / Jmp

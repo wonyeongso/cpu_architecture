@@ -5,7 +5,7 @@ export default function PipelineBasics() {
       <p>한 명령을 여러 단계로 쪼개 단계별로 동시에 처리하면 단위 시간당 throughput 이 올라갑니다. 이상적으로 N-stage = N배 throughput, 실제로는 hazard와 frequency penalty로 덜 나옴.</p>
 
       <h2>Classic 5-Stage Pipeline <span className="en">/ MIPS / RV baseline</span></h2>
-      <div className="diagram">{`   IF  ─►  ID  ─►  EX  ─►  MEM ─►  WB
+      <div className="diagram">{`   IF  ─>  ID  ─>  EX  ─>  MEM ─>  WB
   Fetch  Decode  Execute  Memory  Write-back
 
   Cycle:    1    2    3    4    5    6    7    8
