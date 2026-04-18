@@ -1,7 +1,10 @@
 #!/bin/bash
 set -e
 
-echo "Building..."
+# Use locally installed Node 20 (system node is too old for Vite 5)
+export PATH="$HOME/tools/node-v20.19.4-linux-x64/bin:$PATH"
+
+echo "Building with $(node --version)..."
 npx vite build
 
 echo "Deploying to gh-pages..."
