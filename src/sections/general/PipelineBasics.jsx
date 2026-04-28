@@ -37,12 +37,12 @@ export default function PipelineBasics() {
 <span className="cmt">{"// RAW dependency"}</span>{"\n"}
 <span className="kw">add</span>  x1, x2, x3    <span className="cmt">{"// result of x1 at end of EX (cycle 3)"}</span>{"\n"}
 <span className="kw">sub</span>  x4, x1, x5    <span className="cmt">{"// needs x1 in EX (cycle 4)"}</span>{"\n\n"}
-<span className="cmt">{"// 전통적인 5-stage에서는:"}</span>{"\n"}
-<span className="cmt">{"//   add EX 끝에서 나온 x1 result를 sub EX 입력으로 직결 → stall 0"}</span>{"\n"}
+<span className="cmt">{"// In the classic 5-stage pipeline:"}</span>{"\n"}
+<span className="cmt">{"//   forward x1 from end-of-EX of `add` straight into EX of `sub` → 0 stall"}</span>{"\n"}
 <span className="cmt">{"//   (forwarding / bypass muxes)"}</span>{"\n\n"}
-<span className="cmt">{"// Load-use hazard (MEM → EX 는 1 cycle 지연):"}</span>{"\n"}
+<span className="cmt">{"// Load-use hazard (MEM → EX has a 1-cycle delay):"}</span>{"\n"}
 <span className="kw">ld</span>   x1, [x2]      <span className="cmt">{"// x1 available at end of MEM (cycle 4)"}</span>{"\n"}
-<span className="kw">sub</span>  x4, x1, x5    <span className="cmt">{"// needs x1 in EX (cycle 4) → 1 cycle stall 필요"}</span>
+<span className="kw">sub</span>  x4, x1, x5    <span className="cmt">{"// needs x1 in EX (cycle 4) → 1-cycle stall required"}</span>
       </code></pre>
 
       <h2>Deep Pipeline 트레이드오프 <span className="en">/ Depth vs Frequency</span></h2>

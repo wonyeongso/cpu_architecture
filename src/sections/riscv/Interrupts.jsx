@@ -61,12 +61,12 @@ export default function RiscvInterrupts() {
 
       <h2>기본 ISR 시퀀스 <span className="en">/ S-mode External</span></h2>
       <pre><code>
-<span className="cmt">{"// stvec = vectored mode (1) 이면 mcause에 따라 분기 테이블 사용"}</span>{"\n"}
-<span className="cmt">{"// direct mode (0) 이면 모든 trap이 한 handler로"}</span>{"\n\n"}
+<span className="cmt">{"// stvec = vectored mode (1): dispatch via mcause-indexed table"}</span>{"\n"}
+<span className="cmt">{"// stvec = direct mode (0):  all traps land in one handler"}</span>{"\n\n"}
 <span className="kw">s_ext_handler:</span>{"\n"}
   <span className="kw">lw</span>    t0, <span className="num">0x200004</span>(sp)   <span className="cmt">{"// PLIC claim register"}</span>{"\n"}
   <span className="cmt">{"// ... device-specific dispatch on t0 (INTID) ..."}</span>{"\n"}
-  <span className="kw">sw</span>    t0, <span className="num">0x200004</span>(sp)   <span className="cmt">{"// PLIC complete (쓴 값 = INTID)"}</span>{"\n"}
+  <span className="kw">sw</span>    t0, <span className="num">0x200004</span>(sp)   <span className="cmt">{"// PLIC complete (written value = INTID)"}</span>{"\n"}
   <span className="kw">sret</span>
       </code></pre>
 

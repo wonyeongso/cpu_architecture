@@ -63,11 +63,11 @@ export default function RiscvPrivilege() {
         <div className="card">
           <h4>Trap Handling (M-mode)</h4>
           <pre style={{ margin: '8px 0 0' }}><code>
-<span className="reg">mstatus</span>   <span className="cmt">{"// status (MIE, MPIE, MPP 등)"}</span>{"\n"}
+<span className="reg">mstatus</span>   <span className="cmt">{"// status (MIE, MPIE, MPP, etc.)"}</span>{"\n"}
 <span className="reg">mtvec</span>     <span className="cmt">{"// trap vector base + mode (direct/vectored)"}</span>{"\n"}
 <span className="reg">mepc</span>      <span className="cmt">{"// exception PC (= ARM ELR_ELx)"}</span>{"\n"}
 <span className="reg">mcause</span>    <span className="cmt">{"// exception cause (= ARM ESR_ELx)"}</span>{"\n"}
-<span className="reg">mtval</span>     <span className="cmt">{"// trap value (fault addr, 인스트럭션 등)"}</span>{"\n"}
+<span className="reg">mtval</span>     <span className="cmt">{"// trap value (fault addr, instruction bits, etc.)"}</span>{"\n"}
 <span className="reg">mie / mip</span> <span className="cmt">{"// interrupt enable / pending"}</span>
           </code></pre>
         </div>
@@ -109,7 +109,7 @@ export default function RiscvPrivilege() {
 <span className="kw">mv</span>    a0, t0             <span className="cmt">{"// hartid"}</span>{"\n"}
 <span className="kw">mv</span>    a1, t1             <span className="cmt">{"// start_addr"}</span>{"\n"}
 <span className="kw">mv</span>    a2, t2             <span className="cmt">{"// opaque"}</span>{"\n"}
-<span className="kw">ecall</span>                    <span className="cmt">{"// S → M, OpenSBI 가 코어 기동"}</span>
+<span className="kw">ecall</span>                    <span className="cmt">{"// S → M, OpenSBI brings the core up"}</span>
       </code></pre>
     </>
   )

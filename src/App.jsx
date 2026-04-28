@@ -2,6 +2,20 @@ import { useState, useEffect } from 'react'
 // General
 import IsaOverview from './sections/general/IsaOverview.jsx'
 import PipelineBasics from './sections/general/PipelineBasics.jsx'
+import CacheBasics from './sections/general/CacheBasics.jsx'
+import StackHeap from './sections/general/StackHeap.jsx'
+import StackHeapInterview from './sections/general/StackHeapInterview.jsx'
+import Compilation from './sections/general/Compilation.jsx'
+// Assembly (topic-aligned)
+import AsmCache from './sections/asm/Cache.jsx'
+import AsmCoherence from './sections/asm/Coherence.jsx'
+import AsmMemoryModel from './sections/asm/MemoryModel.jsx'
+import AsmMMU from './sections/asm/MMU.jsx'
+import AsmException from './sections/asm/Exception.jsx'
+import AsmPipeline from './sections/asm/Pipeline.jsx'
+import AsmSIMD from './sections/asm/SIMD.jsx'
+import AsmCompiledPatterns from './sections/asm/CompiledPatterns.jsx'
+import InterviewCache from './sections/asm/InterviewCache.jsx'
 // ARM AArch64
 import ArmOverview from './sections/arm/Overview.jsx'
 import ArmRegisters from './sections/arm/Registers.jsx'
@@ -21,6 +35,12 @@ import RiscvInterrupts from './sections/riscv/Interrupts.jsx'
 import RiscvVector from './sections/riscv/Vector.jsx'
 // Deep Dive
 import Microarchitecture from './sections/uarch/Microarchitecture.jsx'
+import BranchPredictor from './sections/uarch/BranchPredictor.jsx'
+import Coherence from './sections/uarch/Coherence.jsx'
+import CacheAdvanced from './sections/uarch/CacheAdvanced.jsx'
+import PowerDvfs from './sections/uarch/PowerDvfs.jsx'
+import CxlChiplet from './sections/uarch/CxlChiplet.jsx'
+import DramController from './sections/uarch/DramController.jsx'
 // Compare
 import Compare from './sections/Compare.jsx'
 import './App.css'
@@ -31,6 +51,29 @@ const GROUPS = [
     items: [
       { id: 'isa-overview',    ko: 'ISA 개요',            en: 'ISA Overview',         C: IsaOverview,       tagline: 'RISC vs CISC, ARM · RISC-V · x86-64 한눈에 비교.' },
       { id: 'pipeline-basics', ko: 'Pipeline 기초',        en: 'Pipeline Basics',      C: PipelineBasics,    tagline: '5-stage 파이프, hazard, forwarding, ILP/TLP/DLP.' },
+      { id: 'cache-basics',    ko: 'Cache 기본',           en: 'Cache Fundamentals',   C: CacheBasics,       tagline: 'line/set/way, 연관도, 주소 분해, 3C miss, write policy.' },
+      { id: 'stack-heap',      ko: 'Stack & Heap',        en: 'Stack & Heap',         C: StackHeap,         tagline: '프로세스 메모리 레이아웃, 프레임, malloc 내부, 완화책.' },
+      { id: 'compilation',     ko: '컴파일 과정',          en: 'Compilation Pipeline', C: Compilation,       tagline: '전처리 · 컴파일 · 어셈블 · 링크, Arm Compiler/GCC/Clang, LTO.' },
+    ],
+  },
+  {
+    group: 'Assembly',
+    items: [
+      { id: 'asm-cache',     ko: 'Cache asm',       en: 'Cache Instructions',    C: AsmCache,             tagline: 'CMO 분류, DC ZVA, PRFM, false sharing 진단, NEON streaming.' },
+      { id: 'asm-coh',       ko: 'Coherence asm',   en: 'Atomics & Coherence',   C: AsmCoherence,         tagline: 'LL/SC vs LSE vs cmpxchg, spinlock, CAS, ABA, lock-free.' },
+      { id: 'asm-memory',    ko: 'Memory asm',      en: 'Barriers & Ordering',   C: AsmMemoryModel,       tagline: 'DMB/DSB/ISB, LDAR/STLR, fence options, memory_order 매핑.' },
+      { id: 'asm-mmu',       ko: 'MMU asm',         en: 'TLB & Translation',     C: AsmMMU,               tagline: 'TLBI 변형, AT/PAR, page walk by hand, sfence.vma.' },
+      { id: 'asm-exception', ko: 'Exception asm',   en: 'Vectors & Trap Path',   C: AsmException,         tagline: 'Vector table, SVC/HVC/SMC, ESR decode, ERET, GIC ISR.' },
+      { id: 'asm-pipeline',  ko: 'Pipeline asm',    en: 'Branch · BTI · PAC',    C: AsmPipeline,          tagline: 'csel 가족, RAS, BTI/PAC, CSDB/SB, ILP recovery.' },
+      { id: 'asm-simd',      ko: 'SIMD asm',        en: 'NEON · SVE · RVV',      C: AsmSIMD,              tagline: 'V0~V31 lane view, intrinsic 매핑, axpy 4가지, predicate.' },
+      { id: 'asm-patterns',  ko: '공통 patterns',    en: 'C → asm · ABI · Bits',  C: AsmCompiledPatterns,  tagline: 'Cross-topic reference: 컴파일 패턴, calling convention, bit tricks.' },
+    ],
+  },
+  {
+    group: '실전',
+    items: [
+      { id: 'real-asm',       ko: '실전 asm',         en: 'Real-World Asm Patterns',  C: InterviewCache,     tagline: 'JIT 6단계 · DMA 시퀀스 · DMB/DSB/ISB · LL/SC vs LSE · MMU/TLB 시퀀스, 함정 질문 모음.' },
+      { id: 'real-essentials', ko: '실전 핵심',       en: 'Real-World Essentials',     C: StackHeapInterview, tagline: '' },
     ],
   },
   {
@@ -61,7 +104,13 @@ const GROUPS = [
   {
     group: 'Deep Dive',
     items: [
-      { id: 'uarch', ko: '마이크로아키텍처', en: 'Microarchitecture', C: Microarchitecture, tagline: '파이프라인, 분기예측, OoO backend, LSU, 프리페처, SVE, PMU, 스펙 미티게이션.' },
+      { id: 'uarch',   ko: '마이크로아키텍처', en: 'Microarchitecture',     C: Microarchitecture, tagline: '파이프라인, 분기예측, OoO backend, LSU, 프리페처, SVE, PMU, 스펙 미티게이션.' },
+      { id: 'bp-deep', ko: '분기 예측기',      en: 'Branch Predictor',      C: BranchPredictor,   tagline: 'TAGE-SC-L, ITTAGE, RAS, BTB 계층, decoupled fetch, BPU 보안.' },
+      { id: 'coh',     ko: '캐시 코히어런스',  en: 'Cache Coherence · CHI', C: Coherence,         tagline: 'MESI/MOESI, ACE/CHI, CMN mesh, snoop filter, LSE near/far atomics.' },
+      { id: 'cache',   ko: 'Cache 심화',        en: 'Cache · Replacement · Prefetch', C: CacheAdvanced, tagline: 'Replacement heuristic(LRU→RRIP→SHiP), Inclusion, CAT/MPAM, prefetcher 계보, MSHR.' },
+      { id: 'pwr',     ko: '전력 · DVFS',       en: 'Power · DVFS · Idle',   C: PowerDvfs,         tagline: 'V/F 곡선, OPP, governor, WFI/WFE, C-state, PSCI, EAS, turbostat.' },
+      { id: 'cxl',     ko: 'CXL · Chiplet',     en: 'CXL · Chiplets',        C: CxlChiplet,        tagline: 'UCIe, Infinity Fabric, CXL.io/.cache/.mem, Type1/2/3, pooling, fabric.' },
+      { id: 'dram',    ko: 'DRAM 컨트롤러',     en: 'DRAM Controller',       C: DramController,    tagline: 'tRCD/tRP/tCL, bank group, row policy, FR-FCFS, refresh, DDR5 sub-channel, RowHammer.' },
     ],
   },
   {
@@ -76,29 +125,13 @@ const FLAT = GROUPS.flatMap((g) =>
   g.items.map((it) => ({ ...it, group: g.group }))
 )
 
-const ThemeToggle = ({ theme, onToggle }) => (
-  <button className="theme-toggle" onClick={onToggle} title="Toggle theme">
-    {theme === 'dark' ? (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="5"/>
-        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-      </svg>
-    ) : (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-      </svg>
-    )}
-  </button>
-)
 
 export default function App() {
   const [cur, setCur] = useState('isa-overview')
-  const [theme, setTheme] = useState(() => localStorage.getItem('cpu-theme') || 'dark')
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
-    localStorage.setItem('cpu-theme', theme)
-  }, [theme])
+    document.documentElement.setAttribute('data-theme', 'gruvbox')
+  }, [])
 
   const idx = FLAT.findIndex((s) => s.id === cur)
   const section = FLAT[idx]
@@ -121,7 +154,6 @@ export default function App() {
             <div className="logo-mark">CP</div>
             <span>CPU Study</span>
           </div>
-          <div className="sub">ARM · RISC-V · 한글+English</div>
         </div>
         <div className="nav-group">
           {GROUPS.map((g) => (
@@ -149,7 +181,6 @@ export default function App() {
         </div>
         <div className="sidebar-footer">
           <span style={{ fontSize: 11, color: 'var(--text-faint)' }}>v2.0</span>
-          <ThemeToggle theme={theme} onToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')} />
         </div>
       </aside>
 
@@ -164,7 +195,7 @@ export default function App() {
               <span className="cur">{section.en}</span>
             </div>
             <h1>{section.ko}<span className="en">{section.en}</span></h1>
-            <div className="tagline">{section.tagline}</div>
+            {section.tagline && <div className="tagline">{section.tagline}</div>}
           </div>
 
           <div className="section-body">

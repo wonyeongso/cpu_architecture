@@ -21,11 +21,11 @@ export default function RiscvMemoryModel() {
 
       <h2>fence 명령 <span className="en">/ Barrier</span></h2>
       <pre><code>
-<span className="kw">fence</span>  <span className="reg">pred</span>, <span className="reg">succ</span>     <span className="cmt">{"// pred 접근을 succ 접근 전에 관측 보장"}</span>{"\n\n"}
-<span className="cmt">{"// pred/succ 는 r/w/i/o 중 부분집합:"}</span>{"\n"}
+<span className="kw">fence</span>  <span className="reg">pred</span>, <span className="reg">succ</span>     <span className="cmt">{"// pred accesses observed before succ accesses"}</span>{"\n\n"}
+<span className="cmt">{"// pred/succ is a subset of r/w/i/o:"}</span>{"\n"}
 <span className="cmt">{"//   r = memory read, w = memory write"}</span>{"\n"}
 <span className="cmt">{"//   i = device input,  o = device output"}</span>{"\n\n"}
-<span className="cmt">{"// 자주 쓰는 조합:"}</span>{"\n"}
+<span className="cmt">{"// common combinations:"}</span>{"\n"}
 <span className="kw">fence</span>  rw, rw          <span className="cmt">{"// full memory fence (= ARM DMB SY)"}</span>{"\n"}
 <span className="kw">fence</span>  r, rw           <span className="cmt">{"// load barrier"}</span>{"\n"}
 <span className="kw">fence</span>  rw, w           <span className="cmt">{"// store barrier"}</span>{"\n"}
@@ -58,8 +58,8 @@ export default function RiscvMemoryModel() {
 
       <h2>.aq / .rl 한 방향 배리어 <span className="en">/ Acquire / Release</span></h2>
       <pre><code>
-<span className="kw">lr.w.aq</span>   t0, (a0)     <span className="cmt">{"// Load-Acquire — 이후 접근은 이 load 뒤에 관측"}</span>{"\n"}
-<span className="kw">sc.w.rl</span>   t2, t1, (a0) <span className="cmt">{"// Store-Release — 이전 접근은 이 store 전에 관측"}</span>{"\n"}
+<span className="kw">lr.w.aq</span>   t0, (a0)     <span className="cmt">{"// Load-Acquire — later accesses observed after this load"}</span>{"\n"}
+<span className="kw">sc.w.rl</span>   t2, t1, (a0) <span className="cmt">{"// Store-Release — earlier accesses observed before this store"}</span>{"\n"}
 <span className="kw">amoadd.w.aqrl</span> t1, t0, (a0)  <span className="cmt">{"// Acquire + Release (SC)"}</span>
       </code></pre>
       <p>ARM <code>LDAR / STLR</code> 에 직접 대응. 한 방향 배리어는 full fence 보다 가볍고 lock-free 자료구조의 hot path 에 유리.</p>

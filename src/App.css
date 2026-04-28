@@ -23,6 +23,57 @@
   --shadow: 0 4px 20px rgba(0,0,0,0.3);
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
 }
+:root[data-theme="mocha"] {
+  --bg: #1e1e2e;
+  --bg-1: #181825;
+  --bg-2: #313244;
+  --bg-3: #45475a;
+  --border: #313244;
+  --border-strong: #45475a;
+  --text: #cdd6f4;
+  --text-muted: #a6adc8;
+  --text-faint: #6c7086;
+  --primary: #89dceb;
+  --primary-soft: rgba(137, 220, 235, 0.12);
+  --primary-strong: #b4befe;
+  --secondary: #cba6f7;
+  --accent: #f9e2af;
+  --success: #a6e3a1;
+  --danger: #f38ba8;
+  --code-kw: #cba6f7;
+  --code-reg: #f5c2e7;
+  --code-num: #fab387;
+  --code-str: #a6e3a1;
+  --code-cmt: #6c7086;
+  --shadow: 0 4px 20px rgba(17, 17, 27, 0.4);
+  --shadow-sm: 0 1px 3px rgba(17, 17, 27, 0.25);
+}
+:root[data-theme="gruvbox"] {
+  --bg: #282828;
+  --bg-1: #1d2021;
+  --bg-2: #3c3836;
+  --bg-3: #504945;
+  --border: #3c3836;
+  --border-strong: #504945;
+  --text: #ebdbb2;
+  --text-muted: #bdae93;
+  --text-faint: #928374;
+  --primary: #8ec07c;
+  --primary-soft: rgba(142, 192, 124, 0.12);
+  --primary-strong: #b8bb26;
+  --secondary: #d3869b;
+  --accent: #fabd2f;
+  --success: #b8bb26;
+  --danger: #fb4934;
+  --code-kw: #fb4934;
+  --code-reg: #b8bb26;
+  --code-num: #d3869b;
+  --code-str: #b8bb26;
+  --code-cmt: #928374;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --dot-color: rgba(168, 153, 132, 0.10);
+}
 :root[data-theme="light"] {
   --bg: #fafbfc;
   --bg-1: #ffffff;
@@ -50,7 +101,10 @@
 }
 
 body {
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--dot-color, transparent) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-position: 0 0;
   color: var(--text);
 }
 ::selection { background: var(--primary-soft); }
@@ -140,11 +194,21 @@ body {
 
 h2 {
   font-size: 22px; font-weight: 700; letter-spacing: -0.015em;
-  margin: 40px 0 14px; color: var(--text);
+  margin: 44px 0 14px; color: var(--text);
   display: flex; align-items: baseline; gap: 10px;
+  position: relative; padding-left: 14px;
+}
+h2::before {
+  content: ""; position: absolute;
+  left: 0; top: 6px; bottom: 6px; width: 3px;
+  background: linear-gradient(180deg, var(--primary), var(--primary-strong));
+  border-radius: 2px;
 }
 h2:first-child { margin-top: 0; }
-h2 .en { font-size: 13px; font-weight: 500; color: var(--text-faint); }
+h2 .en {
+  font-size: 12px; font-weight: 500; color: var(--text-faint);
+  letter-spacing: 0.02em;
+}
 h3 {
   font-size: 16px; font-weight: 600; margin: 28px 0 10px;
   color: var(--primary); letter-spacing: -0.01em;
@@ -201,9 +265,14 @@ td code { font-size: 12px; }
 @media (max-width: 900px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
 .card {
   background: var(--bg-1); border: 1px solid var(--border);
-  border-radius: 10px; padding: 18px 20px; transition: all 0.15s ease;
+  border-radius: 10px; padding: 18px 20px;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
-.card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-sm); }
+.card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
 .card h4 {
   margin: 0 0 8px; color: var(--primary); font-size: 14px;
   font-weight: 600; letter-spacing: -0.01em;
@@ -223,15 +292,58 @@ td code { font-size: 12px; }
 .tag.hot  { background: rgba(243, 130, 128, 0.12); color: var(--danger);  border-color: transparent; }
 .tag.warn { background: rgba(244, 197, 120, 0.12); color: var(--accent);  border-color: transparent; }
 
+/* Callout — Notion/Linear-inspired tag-and-stripe style. Emoji icons in JSX
+   are intentionally hidden; the category is conveyed by a small uppercase
+   label badge anchored on the top-left edge of the box. */
 .callout {
-  display: flex; gap: 14px; padding: 14px 18px;
-  background: var(--primary-soft); border: 1px solid transparent;
-  border-left: 3px solid var(--primary); border-radius: 8px;
-  margin: 16px 0; font-size: 13.5px; color: var(--text);
+  position: relative;
+  padding: 18px 20px 16px 22px;
+  background: var(--primary-soft);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 8px;
+  margin: 22px 0 18px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
 }
-.callout .icon { font-size: 17px; flex-shrink: 0; }
-.callout.warn { background: rgba(244, 197, 120, 0.08); border-left-color: var(--accent); }
-.callout.danger { background: rgba(243, 130, 128, 0.08); border-left-color: var(--danger); }
+.callout > .icon { display: none; }            /* hide legacy emoji */
+.callout::before {
+  content: "NOTE";
+  position: absolute;
+  top: -9px; left: 14px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--primary);
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-family: "JetBrains Mono", monospace;
+  text-transform: uppercase;
+}
+.callout.warn {
+  background: rgba(250, 189, 47, 0.08);
+  border-left-color: var(--accent);
+  border-color: rgba(250, 189, 47, 0.22);
+}
+.callout.warn::before {
+  content: "WARNING";
+  color: var(--accent);
+  border-color: rgba(250, 189, 47, 0.40);
+}
+.callout.danger {
+  background: rgba(251, 73, 52, 0.08);
+  border-left-color: var(--danger);
+  border-color: rgba(251, 73, 52, 0.22);
+}
+.callout.danger::before {
+  content: "CAUTION";
+  color: var(--danger);
+  border-color: rgba(251, 73, 52, 0.40);
+}
 
 .diagram {
   background: var(--bg-1); border: 1px solid var(--border);

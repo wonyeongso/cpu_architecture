@@ -34,12 +34,12 @@ export default function TrustZone() {
 
       <h2>PSCI 예제 <span className="en">/ CPU_ON via SMC</span></h2>
       <pre><code>
-<span className="cmt">{"// Linux kernel에서 보조 코어 깨우기:"}</span>{"\n"}
+<span className="cmt">{"// Wake a secondary core from the Linux kernel:"}</span>{"\n"}
 <span className="kw">mov</span>  x0, <span className="num">#0xC4000003</span>   <span className="cmt">{"// CPU_ON function ID"}</span>{"\n"}
 <span className="kw">mov</span>  x1, {"#<target_cpu_mpidr>"}{"\n"}
 <span className="kw">mov</span>  x2, {"#<entry_point>"}{"\n"}
 <span className="kw">mov</span>  x3, {"#<context_id>"}{"\n"}
-<span className="kw">smc</span>  <span className="num">#0</span>                 <span className="cmt">{"// → EL3 → ATF → power domain 제어"}</span>
+<span className="kw">smc</span>  <span className="num">#0</span>                 <span className="cmt">{"// → EL3 → ATF → power-domain control"}</span>
       </code></pre>
     </>
   )

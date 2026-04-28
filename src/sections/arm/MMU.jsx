@@ -25,10 +25,10 @@ export default function MMU() {
 
       <h2>시스템 레지스터 <span className="en">/ MMU Control</span></h2>
       <pre><code>
-<span className="reg">TTBR0_EL1</span>  <span className="cmt">{"// Translation Table Base 0 — 보통 user space (하위 VA)"}</span>{"\n"}
-<span className="reg">TTBR1_EL1</span>  <span className="cmt">{"// Translation Table Base 1 — 보통 kernel space (상위 VA)"}</span>{"\n"}
+<span className="reg">TTBR0_EL1</span>  <span className="cmt">{"// Translation Table Base 0 — usually user space (low VA)"}</span>{"\n"}
+<span className="reg">TTBR1_EL1</span>  <span className="cmt">{"// Translation Table Base 1 — usually kernel space (high VA)"}</span>{"\n"}
 <span className="reg">TCR_EL1</span>    <span className="cmt">{"// Translation Control — granule, TxSZ, cacheability"}</span>{"\n"}
-<span className="reg">MAIR_EL1</span>   <span className="cmt">{"// Memory Attribute Indirection — AttrIndx → 실제 속성 매핑"}</span>{"\n"}
+<span className="reg">MAIR_EL1</span>   <span className="cmt">{"// Memory Attribute Indirection — AttrIndx → actual attribute mapping"}</span>{"\n"}
 <span className="reg">SCTLR_EL1</span>  <span className="cmt">{"// System Control — M bit = MMU enable"}</span>
       </code></pre>
 

@@ -21,7 +21,7 @@ export default function RiscvMmu() {
 <span className="reg">satp.MODE</span>:  <span className="num">0</span>=Bare, <span className="num">8</span>=Sv39, <span className="num">9</span>=Sv48, <span className="num">10</span>=Sv57{"\n"}
 <span className="reg">satp.ASID</span>:  address-space identifier (TLB tagging){"\n"}
 <span className="reg">satp.PPN</span>:   루트 페이지 테이블의 physical page#{"\n\n"}
-<span className="cmt">{"// ARM TTBR0/TTBR1 + TCR 와 유사 — 단, 하나의 satp 만 존재 (RV는 user/kernel 구분 없음)"}</span>
+<span className="cmt">{"// similar to ARM TTBR0/TTBR1 + TCR — but only one satp (no user/kernel split in RV)"}</span>
       </code></pre>
 
       <h2>Sv39 Translation Flow <span className="en">/ 3-level walk</span></h2>
@@ -56,9 +56,9 @@ export default function RiscvMmu() {
       <h2>TLB Maintenance <span className="en">/ SFENCE.VMA</span></h2>
       <pre><code>
 <span className="kw">sfence.vma</span>                 <span className="cmt">{"// invalidate all TLB entries for all ASIDs"}</span>{"\n"}
-<span className="kw">sfence.vma</span>  zero, a0      <span className="cmt">{"// ASID 만 지정 — 그 ASID 전체 invalidate"}</span>{"\n"}
-<span className="kw">sfence.vma</span>  a0           <span className="cmt">{"// VA 만 지정 — 모든 ASID 의 그 VA invalidate"}</span>{"\n"}
-<span className="kw">sfence.vma</span>  a0, a1       <span className="cmt">{"// VA + ASID 둘 다"}</span>
+<span className="kw">sfence.vma</span>  zero, a0      <span className="cmt">{"// ASID only — invalidate the entire ASID"}</span>{"\n"}
+<span className="kw">sfence.vma</span>  a0           <span className="cmt">{"// VA only — invalidate that VA across all ASIDs"}</span>{"\n"}
+<span className="kw">sfence.vma</span>  a0, a1       <span className="cmt">{"// both VA and ASID"}</span>
       </code></pre>
       <p>ARM <code>TLBI VAE1, Xt</code> + <code>DSB ISH</code> + <code>ISB</code> 시퀀스에 대응 (<code>sfence.vma</code> 가 synchronization도 포함).</p>
 

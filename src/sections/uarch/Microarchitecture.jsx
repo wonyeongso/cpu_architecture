@@ -129,7 +129,7 @@ export default function Microarchitecture() {
       <h2>SVE / SVE2 <span className="en">/ Scalable Vector Extension</span></h2>
       <p>SVE는 벡터 길이(<code>VL</code>)를 128 ~ 2048-bit 사이에서 <b>구현이 선택</b>. SW는 VL을 모르고 <code>predicate</code> 레지스터로 tail을 안전하게 처리하는 <b>VL-agnostic</b> 모델.</p>
       <pre><code>
-<span className="kw">whilelo</span>  p0.s, x0, x1               <span className="cmt">{"// i < n 을 predicate로 생성"}</span>{"\n"}
+<span className="kw">whilelo</span>  p0.s, x0, x1               <span className="cmt">{"// build predicate from i < n"}</span>{"\n"}
 <span className="kw">ld1w</span>     {"{"} z0.s {"}"}, p0/z, [x2, x0, lsl <span className="num">#2</span>]  <span className="cmt">{"// predicate-zeroed gather load"}</span>{"\n"}
 <span className="kw">fadd</span>     z0.s, p0/m, z0.s, z1.s     <span className="cmt">{"// merge semantics (predicate mask)"}</span>{"\n"}
 <span className="kw">st1w</span>     {"{"} z0.s {"}"}, p0, [x3, x0, lsl <span className="num">#2</span>]{"\n"}

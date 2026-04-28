@@ -24,7 +24,7 @@ export default function RiscvVector() {
 <span className="cmt">{"// vsetvli  rd, rs1, vtype"}</span>{"\n"}
 <span className="cmt">{"//   rs1 = application vector length (AVL)"}</span>{"\n"}
 <span className="cmt">{"//   vtype = {SEW, LMUL, tail policy, mask policy}"}</span>{"\n"}
-<span className="cmt">{"//   rd ← HW 가 줄 수 있는 vl (≤ rs1)"}</span>{"\n\n"}
+<span className="cmt">{"//   rd ← vl that the HW is willing to give (≤ rs1)"}</span>{"\n\n"}
 <span className="kw">vsetvli</span>  t0, a0, e32, m1, ta, ma{"\n"}
 <span className="cmt">{"//   SEW=32 (4-byte element)"}</span>{"\n"}
 <span className="cmt">{"//   LMUL=1 (single reg)"}</span>{"\n"}
@@ -46,7 +46,7 @@ export default function RiscvVector() {
   <span className="kw">add</span>     a2, a2, t1{"\n"}
   <span className="kw">add</span>     a3, a3, t1{"\n"}
   <span className="kw">sub</span>     a0, a0, t0        <span className="cmt">{"// n -= vl"}</span>{"\n"}
-  <span className="kw">bnez</span>    a0, loop          <span className="cmt">{"// VL-agnostic — 길이 모름/무관"}</span>{"\n"}
+  <span className="kw">bnez</span>    a0, loop          <span className="cmt">{"// VL-agnostic — length unknown / irrelevant"}</span>{"\n"}
   <span className="kw">ret</span>
       </code></pre>
       <p>한 바이너리가 VLEN 128 / 256 / 512 / 1024-bit 구현에서 그대로 스케일링.</p>
