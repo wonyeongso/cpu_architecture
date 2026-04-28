@@ -278,16 +278,6 @@ foo:{"\n"}
         </div>
       </div>
 
-      <div className="callout">
-        <span className="icon">💡</span>
-        <div><b>Spotting it in measurements.</b> Linux <code>perf c2c</code> shows HITM (hit-modified) events — these are exactly the M → S or M → O transitions where one core had to give up exclusive ownership for another. ARM SPE samples include source level (L1 / L2 / peer-cache / DRAM) which makes coherence traffic visible per load.</div>
-      </div>
-
-      <div className="callout warn">
-        <span className="icon">⚠</span>
-        <div><b>Variants you'll see in the wild.</b> Intel uses <b>MESIF</b> — the F (Forward) state designates one S-holder as the responder for cache-to-cache transfers, avoiding multiple snoop replies. AMD and ARM use MOESI-family protocols (ARM's CHI calls the states slightly differently but the algebra is the same). Directory-based coherence (used in big-mesh designs like ARM's CMN) replaces broadcast snoops with a per-line directory in the home node, but the user-visible state machine is still MESI/MOESI.</div>
-      </div>
-
       <h2>Cheat Sheet</h2>
       <div className="callout">
         <span className="icon">📌</span>

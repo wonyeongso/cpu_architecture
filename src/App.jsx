@@ -37,6 +37,7 @@ import RiscvVector from './sections/riscv/Vector.jsx'
 import Microarchitecture from './sections/uarch/Microarchitecture.jsx'
 import BranchPredictor from './sections/uarch/BranchPredictor.jsx'
 import Coherence from './sections/uarch/Coherence.jsx'
+import ChiProtocol from './sections/uarch/ChiProtocol.jsx'
 import CacheAdvanced from './sections/uarch/CacheAdvanced.jsx'
 import PowerDvfs from './sections/uarch/PowerDvfs.jsx'
 import CxlChiplet from './sections/uarch/CxlChiplet.jsx'
@@ -72,7 +73,7 @@ const GROUPS = [
   {
     group: '실전',
     items: [
-      { id: 'real-asm',       ko: '실전 asm',         en: 'Real-World Asm Patterns',  C: InterviewCache,     tagline: 'JIT 6단계 · DMA 시퀀스 · DMB/DSB/ISB · LL/SC vs LSE · MMU/TLB 시퀀스, 함정 질문 모음.' },
+      { id: 'real-asm',       ko: '실전 asm',         en: 'Real-World Asm Patterns',  C: InterviewCache,     tagline: '' },
       { id: 'real-essentials', ko: '실전 핵심',       en: 'Real-World Essentials',     C: StackHeapInterview, tagline: '' },
     ],
   },
@@ -107,6 +108,7 @@ const GROUPS = [
       { id: 'uarch',   ko: '마이크로아키텍처', en: 'Microarchitecture',     C: Microarchitecture, tagline: '파이프라인, 분기예측, OoO backend, LSU, 프리페처, SVE, PMU, 스펙 미티게이션.' },
       { id: 'bp-deep', ko: '분기 예측기',      en: 'Branch Predictor',      C: BranchPredictor,   tagline: 'TAGE-SC-L, ITTAGE, RAS, BTB 계층, decoupled fetch, BPU 보안.' },
       { id: 'coh',     ko: '캐시 코히어런스',  en: 'Cache Coherence · CHI', C: Coherence,         tagline: 'MESI/MOESI, ACE/CHI, CMN mesh, snoop filter, LSE near/far atomics.' },
+      { id: 'chi',     ko: 'CHI 프로토콜',      en: 'AMBA CHI',              C: ChiProtocol,       tagline: 'Directory-based coherent interconnect — 4 channels, RN/HN/SN, UC/UD/SC/SD, far atomic, stash, DVM, CMN topology.' },
       { id: 'cache',   ko: 'Cache 심화',        en: 'Cache · Replacement · Prefetch', C: CacheAdvanced, tagline: 'Replacement heuristic(LRU→RRIP→SHiP), Inclusion, CAT/MPAM, prefetcher 계보, MSHR.' },
       { id: 'pwr',     ko: '전력 · DVFS',       en: 'Power · DVFS · Idle',   C: PowerDvfs,         tagline: 'V/F 곡선, OPP, governor, WFI/WFE, C-state, PSCI, EAS, turbostat.' },
       { id: 'cxl',     ko: 'CXL · Chiplet',     en: 'CXL · Chiplets',        C: CxlChiplet,        tagline: 'UCIe, Infinity Fabric, CXL.io/.cache/.mem, Type1/2/3, pooling, fabric.' },
