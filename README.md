@@ -1,40 +1,64 @@
-# cpu-study
+# CPU Architecture Study
 
-CPU 아키텍처 학습 페이지. ARM AArch64 와 RISC-V 를 중심으로 ISA · Privilege · Memory model · MMU · Cache · Interrupt · Vector · 마이크로아키텍처 주제를 다룸. 각 주제에서 두 ISA를 대조해 공통 원리와 차이점을 드러낸다.
+🌐 **Live site → https://wonyeongso.github.io/cpu_architecture/**
 
-## 개발
+CPU 아키텍처 학습 노트. ARM AArch64 와 RISC-V 를 중심으로 ISA · Privilege · Memory model · MMU · Cache · Interrupt · Vector · 마이크로아키텍처 주제를 다룹니다. 각 주제에서 두 ISA를 대조해 공통 원리와 차이점을 드러내고, 실전 어셈 패턴과 시스템 SW 핵심을 별도 섹션으로 정리합니다.
+
+A study site on CPU architecture, focused on ARM AArch64 and RISC-V. Each topic compares the two ISAs side by side to surface shared principles and divergences, with separate sections for real-world assembly patterns and systems-software essentials.
+
+## 다루는 토픽 / Topics
+
+- **General** — ISA Overview · Pipeline · Cache Fundamentals · Stack & Heap · Compilation Pipeline
+- **Assembly** — Cache CMO · Atomics & Coherence · Barriers · MMU/TLB · Exception · Branch/PAC/BTI · NEON/SVE · ABI patterns
+- **실전 (Real-World)** — Asm patterns (JIT · DMA · DMB/DSB/ISB · LSE · MMU/TLB) · Systems essentials (stack/heap, malloc, function call, MESI/MOESI)
+- **ARM AArch64** — Registers · Exception Levels · Memory Model · MMU · Cache · GIC · TrustZone · Core Lineup
+- **RISC-V** — ISA Family · M/S/U Privileges · Memory Model · Paging · PLIC/CLIC/AIA · Vector
+- **Deep Dive** — Microarchitecture · Branch Predictor · Cache Coherence (CHI) · Cache Replacement & Prefetch · Power/DVFS · CXL/Chiplet · DRAM Controller
+- **Compare** — ARM vs RISC-V vs x86 side-by-side
+
+## 개발 / Development
 
 ```bash
 npm install
 npm run dev       # http://localhost:5173
-npm run build     # 정적 결과물 → dist/
-npm run preview   # 빌드 결과 로컬 프리뷰
+npm run build     # static output → dist/
+npm run preview   # local preview of the build
 ```
 
-## 배포
+Vite 5 requires Node 18+.
+
+## 배포 / Deployment
 
 ```bash
-./deploy.sh
-# → https://github.mangoboost.io/pages/wonyeong-so/cpu-study/
+npm run build
+# push the contents of dist/ to the gh-pages branch
 ```
 
-Vite 5 는 Node 18+ 가 필요합니다. `deploy.sh` 는 로컬 설치된 Node 20을 우선 PATH에 넣습니다:
-```
-~/tools/node-v20.19.4-linux-x64/bin
-```
+GitHub Pages source: `gh-pages` branch / root.
 
-## 구조
+## 구조 / Structure
 
 ```
 src/
-├── main.jsx               # 엔트리
-├── App.jsx                # 사이드바 그룹 + 라우팅 + 테마 토글
-├── App.css                # 테마 변수 + 모든 컴포넌트 스타일
-├── index.css              # 폰트 + 전역 리셋
-└── sections/              # 섹션별 컴포넌트
-    ├── general/           # ISA 개요, Pipeline 기초
-    ├── arm/               # ARM AArch64 전용
-    ├── riscv/             # RISC-V 전용
-    ├── uarch/             # ISA-agnostic μarch 심화
-    └── Compare.jsx        # 3-way 비교 요약
+├── main.jsx                 # entry
+├── App.jsx                  # sidebar groups + routing + theme + mobile drawer
+├── App.css                  # theme variables + component styles
+├── index.css                # fonts + global reset
+└── sections/                # one component per topic page
+    ├── general/             # ISA overview, Pipeline, Cache, Stack & Heap, Compilation
+    ├── asm/                 # assembly-level recipes
+    ├── arm/                 # ARM AArch64 specific
+    ├── riscv/               # RISC-V specific
+    ├── uarch/               # ISA-agnostic microarchitecture deep dive
+    └── Compare.jsx          # three-way ISA comparison
 ```
+
+## 면책 / Disclaimer
+
+본 사이트는 학습용 요약입니다. 정확한 조항·비트 정의는 **ARM Architecture Reference Manual**, **RISC-V Privileged / Unprivileged Manuals**, 그리고 각 코어의 **TRM**을 참조하세요.
+
+This site is a study summary. Always cross-check with the official **ARM ARM**, **RISC-V Manuals**, and core **TRMs** for precise spec details.
+
+## 라이선스 / License
+
+See [LICENSE](LICENSE).
