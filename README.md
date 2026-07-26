@@ -1,1 +1,1 @@
-https://wonyeongso.github.io/cpu_architecture/**
+https://wonyeongso.github.io/cpu_architecture
